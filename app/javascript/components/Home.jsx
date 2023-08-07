@@ -1,8 +1,12 @@
+import { useState } from "react";
 import React from "react";
-import { Link } from "react-router-dom";
+import User from './User'
 
-export default () => (
-  <div>
-    Hello React World! 
-  </div>
-);
+export default () => {
+  const [currUser, setCurrUser] = useState(null);
+  return (
+    <div>
+      <User currUser={currUser} setCurrUser={setCurrUser} />
+    </div>
+  )
+};
