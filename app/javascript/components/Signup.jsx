@@ -1,7 +1,9 @@
 import React, { useRef } from "react"
-const Signup = ({ setCurrUser, setShow }) => {
+import { Link } from "react-router-dom";
+
+const Signup = ({ setToken }) => {
     const formRef = useRef()
-    const signup = async (userInfo, setCurrUser) => {
+    const signup = async (userInfo) => {
         const url = "http://localhost:3000/signup"
         try {
             const response = await fetch(url, {
@@ -14,8 +16,7 @@ const Signup = ({ setCurrUser, setShow }) => {
             })
             const data = await response.json()
             if (!response.ok) throw data.error
-            localStorage.setItem('token', response.headers.get("Authorization"))
-            setCurrUser(data)
+            setToken(response.headers.get("Authorization"))
         } catch (error) {
             console.log("error", error)
         }
@@ -27,12 +28,11 @@ const Signup = ({ setCurrUser, setShow }) => {
         const userInfo = {
             "user": { email: data.email, password: data.password }
         }
-        signup(userInfo, setCurrUser)
+        signup(userInfo)
         e.target.reset()
     }
     const handleClick = e => {
         e.preventDefault()
-        setShow(true)
     }
     return (
         <div>
@@ -44,7 +44,7 @@ const Signup = ({ setCurrUser, setShow }) => {
                 <input type='submit' value="Submit" />
             </form>
             <br />
-            <div>Already registered, <a href="#login" onClick={handleClick} >Login</a> here.</div>
+            <div>Already registered, <Link to="/login">Login</Link>   here.</div>
         </div>
     )
 }

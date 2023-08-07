@@ -1,6 +1,6 @@
 import React from "react"
-const Logout = ({ setCurrUser }) => {
-    const logout = async (setCurrUser) => {
+const Logout = ({ }) => {
+    const logout = async () => {
         try {
             const response = await fetch("http://localhost:3000/logout", {
                 method: "delete",
@@ -11,15 +11,15 @@ const Logout = ({ setCurrUser }) => {
             })
             const data = await response.json()
             if (!response.ok) throw data.error
-            localStorage.removeItem("token")
-            setCurrUser(null)
+            localStorage.removeItem('userToken');
+            window.location = "/"
         } catch (error) {
             console.log("error", error)
         }
     }
     const handleClick = e => {
         e.preventDefault()
-        logout(setCurrUser)
+        logout()
     }
     return (
         <div>

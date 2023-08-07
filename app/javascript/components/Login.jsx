@@ -1,8 +1,10 @@
 import React from "react"
+import { Link } from "react-router-dom";
+
 import { useRef } from "react"
-const Login = ({ setCurrUser, setShow }) => {
+const Login = ({ setToken }) => {
     const formRef = useRef()
-    const login = async (userInfo, setCurrUser) => {
+    const login = async (userInfo) => {
         const url = "http://localhost:3000/login"
         try {
             const response = await fetch(url, {
@@ -16,8 +18,7 @@ const Login = ({ setCurrUser, setShow }) => {
             const data = await response.json()
             if (!response.ok)
                 throw data.error
-            localStorage.setItem("token", response.headers.get("Authorization"))
-            setCurrUser(data)
+            setToken(response.headers.get("Authorization"))
         } catch (error) {
             console.log("error", error)
         }
@@ -29,12 +30,12 @@ const Login = ({ setCurrUser, setShow }) => {
         const userInfo = {
             "user": { email: data.email, password: data.password }
         }
-        login(userInfo, setCurrUser)
+        login(userInfo)
+        window.location = "/"
         e.target.reset()
     }
     const handleClick = e => {
         e.preventDefault()
-        setShow(false)
     }
     return (
         <div>
@@ -46,7 +47,7 @@ const Login = ({ setCurrUser, setShow }) => {
                 <input type='submit' value="Login" />
             </form>
             <br />
-            <div>Not registered yet, <a href="#signup" onClick={handleClick} >Signup</a> </div>
+            <div>Not registered yet, <Link to="/signup"> Sign up</Link> here. </div>
         </div>
     )
 }

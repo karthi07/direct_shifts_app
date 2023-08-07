@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   get '/referral', to: 'homepage#referral'
   # Defines the root path route ("/")
   root "homepage#index"
+  get '/*path' => 'homepage#index'
+
 end
