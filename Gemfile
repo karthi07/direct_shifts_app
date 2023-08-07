@@ -30,6 +30,15 @@ gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 4.0"
 
+gem 'rack-cors'
+
+gem 'devise'
+
+gem 'devise-jwt'
+
+# 'dotenv-rails' is for storing secret key in ENV file
+gem 'dotenv-rails', groups: [:development, :test]
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
