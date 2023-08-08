@@ -4,6 +4,7 @@ import Referral from "./Referral";
 import Logout from "./Logout";
 import { Link } from "react-router-dom";
 import useToken from "./useToken"
+import Invite from "./Invite";
 
 export default () => {
 
@@ -14,6 +15,7 @@ export default () => {
   }
   return (
     <div>
+      <Invite />
       <Referral />
       <Logout />
     </div>
