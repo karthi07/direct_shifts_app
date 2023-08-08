@@ -1,35 +1,29 @@
 import React, { useState, useEffect } from "react"
-function getToken() {
-    const tokenString = localStorage.getItem('userToken');
-    const userToken = JSON.parse(tokenString);
-    return userToken?.token
-}
+
 const Referral = () => {
-    const [message, setMessage] = useState()
-    const getText = async () => {
-        try {
-            const response = await fetch("http://localhost:3000/api/v1/referral", {
-                method: "get",
-                headers: {
-                    "content-type": "application/json",
-                    "authorization": getToken()
-                }
-            })
-            if (!response.ok) throw Error
-            const data = await response.json()
-            setMessage(data.data)
-        }
-        catch (error) {
-            console.log("error", error)
-            setMessage(null)
-        }
+  const [referred, setReferred] = useState([])
+  useEffect(() => {
+    getReferredUsers()
+  }, [])
+  const getReferredUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/referral", {
+        method: "get"
+      })
+      if (!response.ok) throw Error
+      const data = await response.json()
+      setReferred(data.referred_users)
     }
-    useEffect(() => {
-        if (true)
-            getText()
-    }, [])
-    return (
-        <div>{message}</div>
-    )
+    catch (error) {
+      console.log("error", error)
+    }
+  }
+  return (
+    <div> List of successfull referral:  <br />< br />
+      {referred.map((ref, i) => <li key={i}>  {ref.username} </li>)}
+
+      <br />< br />
+    </div>
+  )
 }
 export default Referral

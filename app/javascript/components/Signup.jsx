@@ -41,6 +41,7 @@ const Signup = () => {
     }
     signup(userInfo)
     e.target.reset()
+    window.location = "/"
   }
   const handleClick = e => {
     e.preventDefault()

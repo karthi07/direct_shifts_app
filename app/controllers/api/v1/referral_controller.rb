@@ -3,7 +3,7 @@ class Api::V1::ReferralController < ApplicationController
   skip_forgery_protection
 
   def index
-    render :json => {data: "welcome to rails referral"}
+    render :json => {data: "welcome to rails referral", referred_users: current_user.referred_users.select(:username, :referral_completed_at)}
   end
 
   def invite
