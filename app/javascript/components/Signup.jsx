@@ -1,8 +1,19 @@
 import React, { useRef } from "react"
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import useToken from "./useToken"
+import Logout from "./Logout";
 
-const Signup = ({ setToken }) => {
+const Signup = () => {
   const formRef = useRef()
+  const { token, setToken } = useToken();
+  const [queryParameters] = useSearchParams()
+
+  if (token) {
+    return (<>
+      <div>Already Logged in, go back to <Link to="/">Home</Link> .</div>
+      <Logout />
+    </>)
+  }
   const signup = async (userInfo) => {
     const url = "http://localhost:3000/auth/signup"
     try {
@@ -26,7 +37,7 @@ const Signup = ({ setToken }) => {
     const formData = new FormData(formRef.current)
     const data = Object.fromEntries(formData)
     const userInfo = {
-      "user": { email: data.email, username: data.username, password: data.password }
+      "user": { email: data.email, username: data.username, password: data.password, referral: data.referral_code }
     }
     signup(userInfo)
     e.target.reset()
@@ -37,11 +48,14 @@ const Signup = ({ setToken }) => {
   return (
     <div>
       <form ref={formRef} onSubmit={handleSubmit}>
-        Email: <input type="email" name='email' placeholder="email" />
+        Email: <input type="email" name='email' placeholder="email" required />
         <br />
-        Username: <input type="text" name='username' placeholder="username" />
+        Username: <input type="text" name='username' placeholder="username" required />
         <br />
-        Password: <input type="password" name='password' placeholder="password" />
+        Password: <input type="password" name='password' placeholder="password" required />
+        <br />
+
+        Referral Code (optional):  <input type="text" name='referral_code' defaultValue={queryParameters.get('referral_code')} />
         <br />
         <input type='submit' value="Submit" />
       </form>

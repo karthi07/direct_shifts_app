@@ -5,6 +5,9 @@ import React, { useRef } from "react";
 const Invite = () => {
   const formRef = useRef()
 
+  const referralCode = localStorage.getItem('referralCode');
+  const referralLink = `http://localhost:3000/signup?referral_code=${referralCode}`
+
   const invite_user = async (inviteEmail) => {
     const url = "http://localhost:3000/api/v1/invite"
     try {
@@ -37,10 +40,17 @@ const Invite = () => {
   return (
     <div>
       Invite your friends!
+
+      <br />
+      You can invite them using this <a target="_blank" href={referralLink}> link </a>
+      <br /><br />
+      Or invite them by email
       <form ref={formRef} onSubmit={handleSubmit}>
         Email: <input type="email" name='email' placeholder="email" />
         <input type='submit' value="invite" />
       </form>
+      <br />
+      <br />
     </div>
   )
 }

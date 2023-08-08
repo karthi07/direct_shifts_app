@@ -25,6 +25,7 @@ const Login = () => {
       if (!response.ok)
         throw data.error
       setToken(response.headers.get("Authorization"))
+      localStorage.setItem('referralCode', data.referral_code);
     } catch (error) {
       console.log("error", error)
     }
