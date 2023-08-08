@@ -2,7 +2,7 @@ import React from "react"
 const Logout = ({ }) => {
     const logout = async () => {
         try {
-            const response = await fetch("http://localhost:3000/logout", {
+            const response = await fetch("http://localhost:3000/auth/logout", {
                 method: "delete",
                 headers: {
                     "content-type": "application/json",

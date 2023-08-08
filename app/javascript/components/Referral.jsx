@@ -8,7 +8,7 @@ const Referral = () => {
     const [message, setMessage] = useState()
     const getText = async () => {
         try {
-            const response = await fetch("http://localhost:3000/referral", {
+            const response = await fetch("http://localhost:3000/api/v1/referral", {
                 method: "get",
                 headers: {
                     "content-type": "application/json",

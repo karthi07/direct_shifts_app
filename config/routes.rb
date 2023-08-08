@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, 
-  path: '', 
+  path: 'auth', 
   path_names: {
     sign_in: 'login',
     sign_out: 'logout',
@@ -11,8 +11,13 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  namespace :api do
+    namespace :v1 do
+      get 'referral', to: 'referral#index'
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  get '/referral', to: 'homepage#referral'
+  
   # Defines the root path route ("/")
   root "homepage#index"
   get '/*path' => 'homepage#index'

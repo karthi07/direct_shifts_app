@@ -1,11 +1,17 @@
 import React from "react"
 import { Link } from "react-router-dom";
-
 import { useRef } from "react"
-const Login = ({ setToken }) => {
+import useToken from "./useToken"
+
+const Login = () => {
     const formRef = useRef()
-    const login = async (userInfo) => {
-        const url = "http://localhost:3000/login"
+    const { token, setToken } = useToken();
+
+    if (token) {
+        window.location = "/"
+    }
+    const login = async (userInfo, setToken) => {
+        const url = "http://localhost:3000/auth/login"
         try {
             const response = await fetch(url, {
                 method: "post",
@@ -16,6 +22,7 @@ const Login = ({ setToken }) => {
                 body: JSON.stringify(userInfo)
             })
             const data = await response.json()
+            console.log('At login: ', response)
             if (!response.ok)
                 throw data.error
             setToken(response.headers.get("Authorization"))
@@ -30,7 +37,7 @@ const Login = ({ setToken }) => {
         const userInfo = {
             "user": { email: data.email, password: data.password }
         }
-        login(userInfo)
+        login(userInfo, setToken)
         window.location = "/"
         e.target.reset()
     }
